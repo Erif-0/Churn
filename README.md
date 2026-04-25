@@ -25,14 +25,7 @@
 
 ---
 
-## Quick start
 
-```bash
-git clone https://github.com/SANJAY-KRISHNA-MV/Retail-Customer-Churn-Analysis
-cd Retail-Customer-Churn-Analysis
-pip install -r requirements.txt
-streamlit run src/visualization_app.py
-```
 
 The dashboard runs on **synthetic data by default** — no Kaggle download required to see the full UI.
 
