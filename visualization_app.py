@@ -259,7 +259,7 @@ with tab1:
             yaxis=dict(range=[0.6, 1.0], tickformat=".0%", gridcolor="#E4E9EE"),
             **{k: v for k, v in base_layout(height=370).items() if k not in ("yaxis",)},
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     with col_b:
         st.markdown("**Statistical significance**")
@@ -272,7 +272,7 @@ with tab1:
         }
         st.dataframe(
             pd.DataFrame(sig_data),
-            use_container_width=True,
+            width='stretch',
             hide_index=True,
         )
         st.caption("McNemar's test on paired predictions (n = 1,241 test customers)")
@@ -281,11 +281,11 @@ with tab1:
         display_models = models.copy()
         display_models["Selected"] = display_models["Selected"].map({True: "✅ Winner", False: ""})
         display_models[["Precision", "Recall", "F1", "ROC_AUC"]] = (
-            display_models[["Precision", "Recall", "F1", "ROC_AUC"]].applymap(lambda v: f"{v*100:.1f}%")
+            display_models[["Precision", "Recall", "F1", "ROC_AUC"]].map(lambda v: f"{v*100:.1f}%")
         )
         st.dataframe(
             display_models[["Model", "Precision", "Recall", "F1", "ROC_AUC", "Selected"]],
-            use_container_width=True,
+            width='stretch',
             hide_index=True,
         )
 
@@ -314,7 +314,7 @@ with tab1:
         ),
         **base_layout(height=370),
     )
-    st.plotly_chart(fig_r, use_container_width=True)
+    st.plotly_chart(fig_r, width='stretch')
 
 
 # ─── Tab 2 · Funnel Analysis ──────────────────────────────────────────────────
@@ -345,7 +345,7 @@ with tab2:
             yaxis_title="Customers",
             **base_layout(height=370),
         )
-        st.plotly_chart(fig_f, use_container_width=True)
+        st.plotly_chart(fig_f, width='stretch')
 
     with col_f2:
         funnel_pct = funnel.copy()
@@ -357,7 +357,7 @@ with tab2:
             funnel_pct[["Stage", "Before%", "After%", "Δ%"]].rename(
                 columns={"Before%": "Before", "After%": "After"}
             ),
-            use_container_width=True,
+            width='stretch',
             hide_index=True,
         )
         st.success("Checkout: **+12% completion** via at-risk customer surfacing.")
@@ -382,7 +382,7 @@ with tab2:
         yaxis_title="Drop-off %",
         **base_layout(height=320),
     )
-    st.plotly_chart(fig_drop, use_container_width=True)
+    st.plotly_chart(fig_drop, width='stretch')
 
 
 # ─── Tab 3 · Customer Segments ────────────────────────────────────────────────
@@ -408,7 +408,7 @@ with tab3:
             title=dict(text="Risk Segment Distribution", font=dict(size=12, color=NAVY)),
             **{k: v for k, v in base_layout(height=340).items() if k not in ("xaxis", "yaxis")},
         )
-        st.plotly_chart(fig_pie, use_container_width=True)
+        st.plotly_chart(fig_pie, width='stretch')
 
     with col_s2:
         rfm_agg = (
@@ -423,7 +423,7 @@ with tab3:
             .round(1)
             .reset_index()
         )
-        st.dataframe(rfm_agg, use_container_width=True, hide_index=True)
+        st.dataframe(rfm_agg, width='stretch', hide_index=True)
         st.markdown('<p class="caption-text">Average RFM values per segment — high-risk customers show high recency gap and low frequency.</p>', unsafe_allow_html=True)
 
     st.markdown("### Feature Importance — Random Forest")
@@ -442,7 +442,7 @@ with tab3:
         xaxis_tickformat=".0%",
         **{k: v for k, v in base_layout(height=270).items() if k not in ("xaxis",)},
     )
-    st.plotly_chart(fig_fi, use_container_width=True)
+    st.plotly_chart(fig_fi, width='stretch')
 
     st.markdown("### Churn Rate by Country")
     country_churn = (
@@ -464,7 +464,7 @@ with tab3:
         yaxis_ticksuffix="%",
         **base_layout(height=300),
     )
-    st.plotly_chart(fig_cc, use_container_width=True)
+    st.plotly_chart(fig_cc, width='stretch')
 
 
 # ─── Tab 4 · At-Risk Customers ────────────────────────────────────────────────
@@ -491,7 +491,7 @@ with tab4:
         .head(200)
         .reset_index(drop=True)
     )
-    st.dataframe(display, use_container_width=True, hide_index=True, height=420)
+    st.dataframe(display, width='stretch', hide_index=True, height=420)
 
     st.download_button(
         "Download At-Risk Customer List (CSV)",
@@ -513,4 +513,4 @@ with tab4:
         bargap=0.04,
         **base_layout(height=320),
     )
-    st.plotly_chart(fig_dist, use_container_width=True)
+    st.plotly_chart(fig_dist, width='stretch')
